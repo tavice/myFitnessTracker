@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
 const WorkoutScreen = ({ route }) => {
   const { exerciseData } = route.params;
   const [currentSet, setCurrentSet] = useState(1);
   const [isResting, setIsResting] = useState(false);
   const [timer, setTimer] = useState(exerciseData.restTime); // Rest time in seconds
+  const [chronometer, setChronometer] = useState(0);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -24,20 +25,39 @@ const WorkoutScreen = ({ route }) => {
     setTimer(exerciseData.restTime);
   };
 
+  const handleChronometer = () => {
+    setChronometer(chronometer + 1);
+  };
+
   return (
-    <View>
-      <Text>Exercise: {exerciseData.name}</Text>
-      <Text>Set: {currentSet} / {exerciseData.sets}</Text>
+    <View style={styles.container}>
+      <Text style={styles.textWorkout}>Exercise: {exerciseData.name}</Text>
+      <Text style={styles.textWorkout}>Set: {currentSet} / {exerciseData.sets}</Text>
       {isResting ? (
-        <Text>Rest: {timer} seconds</Text>
+        <Text style={styles.textWorkout}>Rest: {timer} seconds</Text>
       ) : (
         <>
-          <Text>Reps: {exerciseData.reps}</Text>
+          <Text style={styles.textWorkout}>Reps: {exerciseData.reps}</Text>
           <Button title="Set Completed" onPress={handleSetCompleted} />
         </>
+
+        
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+ textWorkout: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  
+});
 
 export default WorkoutScreen;
