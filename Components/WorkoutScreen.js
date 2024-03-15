@@ -35,7 +35,7 @@ const WorkoutScreen = ({ route }) => {
 
   const handleStopStopwatch = () => {
     // Pass the recorded time to a function for storing workout data
-    handleRecordWorkoutTime(stopwatchTime);
+    //handleRecordWorkoutTime(stopwatchTime);
     setStopwatchRunning(false);
   };
 
@@ -56,6 +56,7 @@ const WorkoutScreen = ({ route }) => {
        running={stopwatchRunning}
        onStart={handleStartStopwatch}
        onStop={handleStopStopwatch}
+       onFinish={handleRecordWorkoutTime}
       />
 
       {isResting ? (

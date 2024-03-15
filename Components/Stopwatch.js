@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const Stopwatch = ({ running: externalRunning, onStart, onStop }) => {
+const Stopwatch = ({ running, onStart, onStop, onFinish }) => {
   // State and refs to manage time and stopwatch status
   const [time, setTime] = useState(0);
   const [isInternalRunning, setIsInternalRunning]  = useState(false);
@@ -38,6 +38,15 @@ const Stopwatch = ({ running: externalRunning, onStart, onStop }) => {
     }, 1000);
     setIsInternalRunning(true);
   };
+
+  //Function to stop the stopwatch
+  const handleStopStopwatch = () => {
+    clearInterval(intervalRef.current);
+    setRunning(false);
+    const elapsedTime = Math.floor((Date.now() - startTimeRef.current) / 1000);
+    onFinish && onFinish(elapsedTime);
+  };
+
 
   return (
     <View style={styles.container}>
